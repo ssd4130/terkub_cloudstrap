@@ -1,3 +1,25 @@
+resource "google_compute_instance" "default" {
+  name         = "controller1"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+    }
+  }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.11
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+  
+}
+
 resource "google_compute_network" "vpc_network" {
   name = "kubernetes-net"
   auto_create_subnetworks = false
@@ -37,4 +59,7 @@ resource "google_compute_firewall" "kuberenetes-external" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-
+#resource "google_compute_address" "external_address" {
+#  name         = "external_IP"
+#  region       = "us-west1"
+#}
