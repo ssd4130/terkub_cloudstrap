@@ -1,4 +1,4 @@
-resource "google_compute_instance" "default" {
+resource "google_compute_instance" "controller" {
   name         = "controller1"
   machine_type = "n1-standard-1"
   zone         = "us-west1-c"
@@ -17,9 +17,120 @@ resource "google_compute_instance" "default" {
     scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
   }
   can_ip_forward = true
-  
 }
 
+resource "google_compute_instance" "controller" {
+  name         = "controller2"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+    }
+  }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.12
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+}
+resource "google_compute_instance" "controller" {
+  name         = "controller3"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+    }
+  }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.13
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+}
+
+resource "google_compute_instance" "worker" {
+  name         = "worker1"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+    }
+  }
+  metadata {
+    pod-cidr = "10.200.1.0/24"
+  }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.21
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+}
+
+resource "google_compute_instance" "worker" {
+  name         = "worker2"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+      }
+  }
+  metadata {
+    pod-cidr = "10.200.2.0/24"
+  }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.22
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+}
+
+resource "google_compute_instance" "worker" {
+  name         = "worker3"
+  machine_type = "n1-standard-1"
+  zone         = "us-west1-c"
+  tags = ["kubernetes", "controller"]
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size = 200
+    }
+  }
+  metadata{
+   pod-cidr = "10.240.3.0/24"
+ }
+  network_interface {
+    network = "${google_compute_network.vpc_network.name}"
+    network_ip = 10.240.0.23
+  }
+  service_account {
+    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
+  }
+  can_ip_forward = true
+}
 resource "google_compute_network" "vpc_network" {
   name = "kubernetes-net"
   auto_create_subnetworks = false
