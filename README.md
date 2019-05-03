@@ -5,14 +5,14 @@ The package works by generating all necessary .pem, .kubeconfig, and .yaml files
 
 Terraform Resources Created:
 -----------------------------
-3 "worker" compute instances
-3 "controller" compute instances
-VPC resource
-External firewall
-Internal firewall
-Health Checks
-Network Load Balancer
-Target Pools
+* 3 "worker" compute instances
+* 3 "controller" compute instances
+* VPC resource
+* External firewall
+* Internal firewall
+* Health Checks
+* Network Load Balancer
+* Target Pools
 
 
 Files to generate:
