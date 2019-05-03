@@ -17,6 +17,14 @@ resource "google_compute_instance" "controller" {
     scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
   }
   can_ip_forward = true
+  provisioner "remote-exec" {
+	inline = [
+		"wget -q --show-progress --https-only --timestamping "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz"",
+		"tar -xvf etcd-v3.3.9-linux-amd64.tar.gz",
+		"sudo mv etcd-v3.3.9-linux-amd64/etcd* /usr/local/bin/",
+		"sudo mkdir -p /etc/etcd /var/lib/etcd",
+		"sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/",
+		"export ETCD_NAME=$(hostname -s)",
 }
 
 resource "google_compute_instance" "controller" {
@@ -39,6 +47,7 @@ resource "google_compute_instance" "controller" {
   }
   can_ip_forward = true
 }
+
 resource "google_compute_instance" "controller" {
   name         = "controller3"
   machine_type = "n1-standard-1"
@@ -170,6 +179,10 @@ resource "google_compute_firewall" "kuberenetes-external" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+#@TODO:
+# Configure .ssh keys for instances
+
+# Need to reserve IP for External Load balancer?
 #resource "google_compute_address" "external_address" {
 #  name         = "external_IP"
 #  region       = "us-west1"
