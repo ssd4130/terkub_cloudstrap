@@ -28,6 +28,21 @@ module "google_compute_instance" {
   source = "../modules/worker_instance"
 }
 
+module "vpc" {
+  source = "../modules/vpc"
+}
+
+module "subnet" {
+  source = "../modules/subnet"
+}
+
+module "firewall_external" {
+  source = "../modules/firewall_external"
+}
+
+module "firewall_internal" {
+  source = "../modules/firewall_internal"
+}
 
 
 
