@@ -4,6 +4,10 @@ variable "boot_disk_size" {
 	default = 200
 }
 
+variable "boot_disk_image" {
+	default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
 variable "instance_name" {
 	default = "controller"
 }
@@ -14,10 +18,6 @@ variable "machine_type" {
 
 variable "zone" {
 	default = "us-west1-c"
-}
-
-variable "boot_disk_image" {
-	default = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
 
 variable "etcd_service_path" {

@@ -1,14 +1,17 @@
+provider "gcp" {
+  region = "${vars.region}"
+}
+
+module "google_compute_instance" {
+  source = "../modules/controller_instance"
+}
+
+
+
+
+----------------------------------------------------------
+
 resource "google_compute_instance" "controller" {
-  name         = 
-  machine_type =
-  zone         = 
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = 
-      size = 
-    }
-  }
   network_interface {
     network = "${google_compute_network.vpc_network.name}"
     network_ip = 10.240.0.11

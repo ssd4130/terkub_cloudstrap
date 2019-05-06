@@ -1,7 +1,12 @@
 Description
 -----------
-This is a work in progress, do not attempt to run deploy.sh until this message disappears from the readme.
-The package works by generating all necessary .pem, .kubeconfig, and .yaml files on the local machine running the deploy.sh script. Once all files are generated, terraform is used to provision necessary compute instances for workers and controllers, as well as various networking resources requred for cluster functionality. Terraform will copy each generated file to the required compute instance on GCP, and then the script will remove the files from the local host.
+**This is a work in progress, do not attempt to run deploy.sh until this message disappears from the readme.**
+
+This project is to demonstate deploying GCP instances to create an unmanaged Kubernetes cluster using Terraform to configure the instances. The two main instances in the cluster are "Controller" and "Worker" instances. The cluster is composed of three of each type of instance. 
+
+The script **deploy.sh**, when run, will execute a number of generation scripts to create the unique keys required for the services that run on the worker and controller instaces. Once the scipt finishes generating the files, it then uses Terraform to deploy the instances and copies the required files to each type of instance. Once this provisioning is done, the script will clean deployment fragments from the deployment server.
+
+All resources that are created by deploy.sh are located in the cluster directory. All resources (including temp files for configuration and keys) and scripts are located in the resources directory.
 
 Terraform Resources Created:
 -----------------------------
