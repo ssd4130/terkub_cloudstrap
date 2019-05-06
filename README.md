@@ -5,60 +5,78 @@ The package works by generating all necessary .pem, .kubeconfig, and .yaml files
 
 Terraform Resources Created:
 -----------------------------
-3 "worker" compute instances
-3 "controller" compute instances
-VPC resource
-External firewall
-Internal firewall
-Health Checks
-Network Load Balancer
-Target Pools
+* 3 "worker" compute instances
+* 3 "controller" compute instances
+* VPC resource
+* External firewall
+* Internal firewall
+* Health Checks
+* Network Load Balancer
+* Target Pools
 
 
 Files to generate:
 ------------------
-service-account-key.pem
-service-account.pem
-kubernetes-key.pem
-kubernetes.pem
-kube-scheduler-key.pem
-kube-scheduler.pem
-kube-proxy-key.pem
-kube-proxy.pem
-kube-controller-manager-key.pem
-kube-controller-manager.pem
-worker-0-key.pem
-worker-0.pem
-worker-1-key.pem
-worker-1.pem
-worker-2-key.pem
-worker-2.pem
-admin-key.pem
-admin.pem
-ca-key.pem
-ca.pem
-worker-0.kubeconfig
-worker-1.kubeconfig
-worker-2.kubeconfig
-kube-proxy.kubeconfig
-kube-controller-manager.kubeconfig
-kube-scheduler.kubeconfig
-admin.kubeconfig
-encryption-config.yaml
-* etcd binaries
-etcd.service
-kube-apiserver.service
-kube-controller-manager.service
-kube-scheduler.service
-kube-scheduler.yaml
-nginx
-kubernetes.default.svc.cluster.local
-bridge.conf
-loopback.conf
-config.toml
-containerd.service
-kubelet-config.yaml
-kubelet.service
-kube-proxy-config.yaml
-kube-proxy.service
 
+Keys:
+-----
+* service-account-key.pem
+* service-account.pem
+* kubernetes-key.pem
+* kubernetes.pem
+* kube-scheduler-key.pem
+* kube-scheduler.pem
+* kube-proxy-key.pem
+* kube-proxy.pem
+* kube-controller-manager-key.pem
+* kube-controller-manager.pem
+* worker-0-key.pem
+* worker-0.pem
+* worker-1-key.pem
+* worker-1.pem
+* worker-2-key.pem
+* worker-2.pem
+* admin-key.pem
+* admin.pem
+* ca-key.pem
+* ca.pem 
+
+.Kubeconfig
+-----------
+* worker-0.kubeconfig
+* worker-1.kubeconfig
+* worker-2.kubeconfig
+* kube-proxy.kubeconfig
+* kube-controller-manager.kubeconfig
+* kube-scheduler.kubeconfig
+* admin.kubeconfig
+
+YAML
+-----
+* encryption-config.yaml
+* kube-scheduler.yaml
+* kubelet-config.yaml
+* kube-proxy-config.yaml
+
+.Service
+---------
+* etcd.service
+* kube-apiserver.service
+* kube-controller-manager.service
+* kube-scheduler.service
+* containerd.service
+* kubelet.service
+* kube-proxy.service
+
+Configs
+-------
+* bridge.conf
+* loopback.conf
+
+Others
+-------
+* etcd binaries
+* nginx
+* kubernetes.default.svc.cluster.local
+* config.toml
+* kubernetes.default.svc.cluster.local
