@@ -1,6 +1,6 @@
 {
 
-cat > ca-config.json <<EOF
+cat > ../tmp/ca-config.json <<EOF
 {
   "signing": {
     "default": {
@@ -16,7 +16,7 @@ cat > ca-config.json <<EOF
 }
 EOF
 
-cat > ca-csr.json <<EOF
+cat > ../tmp/ca-csr.json <<EOF
 {
   "CN": "Kubernetes",
   "key": {
@@ -35,6 +35,6 @@ cat > ca-csr.json <<EOF
 }
 EOF
 
-cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+cfssl gencert -initca ../tmp/ca-csr.json | cfssljson -bare ../secrets/ca
 
 }

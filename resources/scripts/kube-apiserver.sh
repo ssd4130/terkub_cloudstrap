@@ -1,4 +1,4 @@
-cat <<EOF | sudo tee kube-apiserver.service
+cat <<EOF | sudo tee ../tmp/kube-apiserver.service
 [Unit]
 Description=Kubernetes API Server
 Documentation=https://github.com/kubernetes/kubernetes

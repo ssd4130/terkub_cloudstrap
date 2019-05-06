@@ -1,8 +1,8 @@
 {
 
-cat > admin-csr.json <<EOF
+cat > service-account-csr.json <<EOF
 {
-  "CN": "admin",
+  "CN": "service-accounts",
   "key": {
     "algo": "rsa",
     "size": 2048
@@ -11,7 +11,7 @@ cat > admin-csr.json <<EOF
     {
       "C": "US",
       "L": "Portland",
-      "O": "system:masters",
+      "O": "Kubernetes",
       "OU": "Kubernetes The Hard Way",
       "ST": "Oregon"
     }
@@ -24,6 +24,5 @@ cfssl gencert \
   -ca-key=ca-key.pem \
   -config=ca-config.json \
   -profile=kubernetes \
-  admin-csr.json | cfssljson -bare admin
-
+  service-account-csr.json | cfssljson -bare ../tmp/service-account
 }

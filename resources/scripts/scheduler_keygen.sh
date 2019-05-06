@@ -1,6 +1,6 @@
 {
 
-cat > kube-scheduler-csr.json <<EOF
+cat > ../tmp/kube-scheduler-csr.json <<EOF
 {
   "CN": "system:kube-scheduler",
   "key": {
@@ -20,10 +20,10 @@ cat > kube-scheduler-csr.json <<EOF
 EOF
 
 cfssl gencert \
-  -ca=ca.pem \
-  -ca-key=ca-key.pem \
-  -config=ca-config.json \
+  -ca=../secrets/ca.pem \
+  -ca-key=../secrets/ca-key.pem \
+  -config=../tmp/ca-config.json \
   -profile=kubernetes \
-  kube-scheduler-csr.json | cfssljson -bare kube-scheduler
+  ../tmp/kube-scheduler-csr.json | cfssljson -bare ../tmp/kube-scheduler
 
 }

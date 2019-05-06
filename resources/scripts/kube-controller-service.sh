@@ -1,4 +1,4 @@
-cat <<EOF | sudo tee kube-controller-manager.service
+cat <<EOF | sudo tee ../tmp/kube-controller-manager.service
 [Unit]
 Description=Kubernetes Controller Manager
 Documentation=https://github.com/kubernetes/kubernetes

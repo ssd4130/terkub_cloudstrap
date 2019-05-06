@@ -1,4 +1,4 @@
-cat <<EOF | sudo tee etcd.service
+cat <<EOF | sudo tee ../tmp/etcd.service
 [Unit]
 Description=etcd
 Documentation=https://github.com/coreos

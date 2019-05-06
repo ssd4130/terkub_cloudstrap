@@ -1,12 +1,12 @@
 resource "google_compute_instance" "controller" {
-  name         = "controller1"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
+  name         = 
+  machine_type =
+  zone         = 
   tags = ["kubernetes", "controller"]
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
+      image = 
+      size = 
     }
   }
   network_interface {
@@ -32,200 +32,65 @@ resource "google_compute_instance" "controller" {
     "sudo mkdir -p /var/lib/kubernetes/",]
 		}
   provisioner "file" {
-    source = "etcd.service/"
+    source = ""
     destination = "/etc/systemd/system"
   }
   provisioner "file" {
-    source      = "ca.pem"
+    source      = ""
     destination = "/etc/etcd"
    }
   provisioner "file" {
-    source      = "kubernetes-key.pem"
+    source      = ""
     destination = "/etc/etcd"
   }
   provisioner "file" {
-    source      = "kubernetes.pem"
+    source      = ""
     destination = "/etc/etcd"
   }
   provisioner "file" {
-    source = "ca.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "ca-key.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "kubernetes-key.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "kubernetes.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "service-account-key.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "service-account.pem"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "encryption-config.yaml/"
+    source = ""
     destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source = "kube-apiserver.service"
+    source = ""
     destination = "/etc/systemd/system/"
   }
   provisioner "remote-exec" {
     inline = ["sudo systemctl daemon-reload","sudo systemctl enable etcd","sudo systemctl start etcd"]
   }
-
-}
-
-resource "google_compute_instance" "controller" {
-  name         = "controller2"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
-    }
-  }
-  network_interface {
-    network = "${google_compute_network.vpc_network.name}"
-    network_ip = 10.240.0.12
-  }
-  service_account {
-    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
-  }
-  can_ip_forward = true
-  provisioner "remote-exec" {
-  inline = [
-    "wget -q --show-progress --https-only --timestamping "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz"",
-    "tar -xvf etcd-v3.3.9-linux-amd64.tar.gz",
-    "sudo mv etcd-v3.3.9-linux-amd64/etcd* /usr/local/bin/",
-    "sudo mkdir -p /etc/etcd /var/lib/etcd",
-    "export ETCD_NAME="$(hostname -s)"",
-    "export INTERNAL_IP="$(curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/1/ip)""]
-    }
   provisioner "file" {
-    source = "etcd.service/"
-    destination = "/etc/systemd/system"
+    source = ""
+    destination = "/var/lib/kubernetes/"
   }
   provisioner "file" {
-    source      = "ca.pem"
-    destination = "/etc/etcd"
-   }
-  provisioner "file" {
-    source      = "kubernetes-key.pem"
-    destination = "/etc/etcd"
+    source = ""
+    destination = "/"
   }
-  provisioner "file" {
-    source      = "kubernetes.pem"
-    destination = "/etc/etcd"
-  }
-  provisioner "remote-exec" {
-    inline = ["sudo systemctl daemon-reload","sudo systemctl enable etcd","sudo systemctl start etcd"]
-  }
-}
-
-resource "google_compute_instance" "controller" {
-  name         = "controller3"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
-    }
-  }
-  network_interface {
-    network = "${google_compute_network.vpc_network.name}"
-    network_ip = 10.240.0.13
-  }
-  service_account {
-    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
-  }
-  can_ip_forward = true
-}
-
-resource "google_compute_instance" "worker" {
-  name         = "worker1"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
-    }
-  }
-  metadata {
-    pod-cidr = "10.200.1.0/24"
-  }
-  network_interface {
-    network = "${google_compute_network.vpc_network.name}"
-    network_ip = 10.240.0.21
-  }
-  service_account {
-    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
-  }
-  can_ip_forward = true
-}
-
-resource "google_compute_instance" "worker" {
-  name         = "worker2"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
-      }
-  }
-  metadata {
-    pod-cidr = "10.200.2.0/24"
-  }
-  network_interface {
-    network = "${google_compute_network.vpc_network.name}"
-    network_ip = 10.240.0.22
-  }
-  service_account {
-    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
-  }
-  can_ip_forward = true
-}
-
-resource "google_compute_instance" "worker" {
-  name         = "worker3"
-  machine_type = "n1-standard-1"
-  zone         = "us-west1-c"
-  tags = ["kubernetes", "controller"]
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 200
-    }
-  }
-  metadata{
-   pod-cidr = "10.240.3.0/24"
- }
-  network_interface {
-    network = "${google_compute_network.vpc_network.name}"
-    network_ip = 10.240.0.23
-  }
-  service_account {
-    scopes = ["compute-rw","storage-ro","service-management","service-control","logging-write","monitoring"]
-  }
-  can_ip_forward = true
-}
+}`
 
 resource "google_compute_network" "vpc_network" {
   name = "kubernetes-net"
