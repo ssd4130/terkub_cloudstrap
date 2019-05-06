@@ -1,3 +1,10 @@
+Prerequisites
+--------------
+* Verify your Google Cloud SDK version is 218.0.0 or higher
+* Install cfssljson, cfssl, kubectl
+
+*Note: Estimated cost to run this tutorial $0.22 per hour on GCP ($5.39 per day)*
+
 Description
 -----------
 **This is a work in progress, do not attempt to run deploy.sh until this message disappears from the readme.**
