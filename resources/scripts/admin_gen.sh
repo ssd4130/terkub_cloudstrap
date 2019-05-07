@@ -1,6 +1,6 @@
 {
 
-cat > ../tmp/admin-csr.json <<EOF
+cat > resources/tmp/admin-csr.json <<EOF
 {
   "CN": "admin",
   "key": {
@@ -20,10 +20,10 @@ cat > ../tmp/admin-csr.json <<EOF
 EOF
 
 cfssl gencert \
-  -ca=../secrets/ca.pem \
-  -ca-key=../secrets/ca-key.pem \
-  -config=../tmp/ca-config.json \
-  -profile=../tmp/kubernetes \
-  ../tmp/admin-csr.json | cfssljson -bare ../tmp/admin
+  -ca=resources/secrets/ca.pem \
+  -ca-key=resources/secrets/ca-key.pem \
+  -config=resources/tmp/ca-config.json \
+  -profile=kubernetes \
+  resources/tmp/admin-csr.json | cfssljson -bare resources/tmp/admin
 
 }
